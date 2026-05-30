@@ -1,0 +1,17 @@
+read_verilog -sv ARM_test.v
+hierarchy -top ARM
+proc
+opt -full
+fsm
+opt -full
+memory
+opt -full
+techmap
+opt -full
+dfflibmap -liberty /OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+abc -liberty /OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+opt_clean -purge
+hilomap -hicell LOGIC1_X1 Z -locell LOGIC0_X1 Z
+stat -liberty /OpenROAD-flow-scripts/flow/platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
+clean
+write_verilog -noattr -noexpr ARM_mapped.v
